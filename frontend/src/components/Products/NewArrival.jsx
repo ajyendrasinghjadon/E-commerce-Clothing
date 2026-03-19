@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
@@ -14,14 +15,14 @@ const NewArrival = () => {
   const [newArrivals, setNewArrivals] = useState([])
 
   useEffect(() => {
-    const fetchNewArrivals = async () => { 
+    const fetchNewArrivals = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/products/new-arrivals`
         )
         setNewArrivals(response.data)
       } catch (error) {
-        console.error(error) 
+        console.error(error)
       }
     }
 
@@ -37,7 +38,7 @@ const NewArrival = () => {
   const handleMouseMove = (e) => {
     if (!isDragging) return;
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = ( x - startX ) * 1.5;
+    const walk = (x - startX) * 1.5;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   }
 
@@ -52,16 +53,16 @@ const NewArrival = () => {
 
   // Update scroll buttons
   const updateScrollButtons = () => {
-  const container = scrollRef.current;
-  if (!container) return;
+    const container = scrollRef.current;
+    if (!container) return;
 
-  const leftScroll = container.scrollLeft;
-  const maxScrollLeft =
-    container.scrollWidth - container.clientWidth;
+    const leftScroll = container.scrollLeft;
+    const maxScrollLeft =
+      container.scrollWidth - container.clientWidth;
 
-  setCanScrollLeft(leftScroll > 0);
-  setCanScrollRight(leftScroll < maxScrollLeft - 2);
-};
+    setCanScrollLeft(leftScroll > 0);
+    setCanScrollRight(leftScroll < maxScrollLeft - 2);
+  };
 
 
   useEffect(() => {
@@ -77,13 +78,27 @@ const NewArrival = () => {
   return (
     <section className="py-16 px-4 lg:px-0 mx-4 md:mx-12">
       <div className="container mx-auto text-center mb-10 relative">
-        <h2 className="text-3xl font-bold mb-4">Explore New Arrivals</h2>
-        <p className="text-lg text-gray-600 mb-8">
+        <motion.h2
+          className="text-3xl font-bold mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.5 }}
+        >
+          Explore New Arrivals
+        </motion.h2>
+        <motion.p
+          className="text-lg text-gray-600 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           Discover the latest styles straight off the runway, freshly added to keep your wardrobe on the cutting edge of fashion.
-        </p>
+        </motion.p>
         {/* Scroll Buttons */}
         <div className="absolute right-0 -bottom-7.5 flex space-x-2">
-          <button 
+          <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
             className={`p-2 rounded-3xl border border-gray-300 ${canScrollLeft ? "bg-white text-black hover:cursor-pointer" : "bg-gray-200 text-gray-400"}`}>
@@ -106,20 +121,27 @@ const NewArrival = () => {
         onMouseLeave={handleMouseUpOrLeave}
       >
         {newArrivals.map((product) => (
-          <div key={product._id} className="min-w-70 sm:min-w-[320px] lg:min-w-87.5 shrink-0 relative">
+          <motion.div
+            key={product._id}
+            className="min-w-[150px] sm:min-w-[320px] lg:min-w-[350px] shrink-0 relative group"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
+          >
             <img
               src={product.images[0]?.url}
               alt={product.images[0]?.altText || product.name}
-              className="w-full h-125 object-cover rounded-lg"
+              className="w-full h-[250px] sm:h-125 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
               draggable="false"
             />
-            <div className="absolute bottom-0 left-0 right-0 backdrop-blur-md text-white p-4 rounded-b-lg">
+            <div className="absolute bottom-0 left-0 right-0 backdrop-blur-md text-white p-2 sm:p-4 rounded-b-lg">
               <Link to={`/product/${product._id}`} className="block">
-                <h4 className="font-medium">{product.name}</h4>
-                <p className="mt-1">${product.price}</p>
+                <h4 className="font-medium text-sm sm:text-base">{product.name}</h4>
+                <p className="mt-1 text-xs sm:text-sm">${product.price}</p>
               </Link>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

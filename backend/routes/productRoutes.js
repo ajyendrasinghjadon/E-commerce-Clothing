@@ -1,13 +1,20 @@
 const express = require("express");
+const multer = require("multer");
+const cloudinary = require("../config/cloudinary");
+const streamifier = require("streamifier");
 const Product = require("../models/Product");
 const { protect, admin } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+// Multer setup
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
 // @route POST /api/products
 // @desc create a new Product
 // @access Private/Admin
-router.post("/", protect, admin, async (req, res) => {
+router.post("/", protect, admin, upload.array("images", 5), async (req, res) => {
   try {
     const {
       name,
@@ -22,7 +29,6 @@ router.post("/", protect, admin, async (req, res) => {
       collections,
       material,
       gender,
-      images,
       isFeatured,
       isPublished,
       tags,
@@ -30,6 +36,22 @@ router.post("/", protect, admin, async (req, res) => {
       weight,
       sku,
     } = req.body;
+
+    let images = [];
+
+    // If there are files, upload them to Cloudinary
+    if (req.files && req.files.length > 0) {
+      const uploadPromises = req.files.map((file) => {
+        return new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream((error, result) => {
+            if (result) resolve({ url: result.secure_url });
+            else reject(error);
+          });
+          streamifier.createReadStream(file.buffer).pipe(stream);
+        });
+      });
+      images = await Promise.all(uploadPromises);
+    }
 
     const product = new Product({
       name,
@@ -39,8 +61,8 @@ router.post("/", protect, admin, async (req, res) => {
       countInStock,
       category,
       brand,
-      sizes,
-      colors,
+      sizes: Array.isArray(sizes) ? sizes : sizes.split(","),
+      colors: Array.isArray(colors) ? colors : colors.split(","),
       collections,
       material,
       gender,
@@ -51,7 +73,7 @@ router.post("/", protect, admin, async (req, res) => {
       dimensions,
       weight,
       sku,
-      user: req.user._id, // Reference to the admin user who created it
+      user: req.user._id,
     });
 
     const createdProduct = await product.save();
@@ -65,7 +87,7 @@ router.post("/", protect, admin, async (req, res) => {
 // @Route PUT /api/products/:id
 // @desc Update an existing product ID
 // @access Private/Admin
-router.put("/:id", protect, admin, async (req, res) => {
+router.put("/:id", protect, admin, upload.array("images", 5), async (req, res) => {
   try {
     const {
       name,
@@ -80,7 +102,7 @@ router.put("/:id", protect, admin, async (req, res) => {
       collections,
       material,
       gender,
-      images,
+      images, // Existing images passed back as JSON
       isFeatured,
       isPublished,
       tags,
@@ -93,6 +115,30 @@ router.put("/:id", protect, admin, async (req, res) => {
     const product = await Product.findById(req.params.id);
 
     if (product) {
+      let updatedImages = [];
+
+      // Parse existing images if they come as a string (happens with FormData)
+      if (typeof images === "string") {
+        updatedImages = JSON.parse(images);
+      } else if (Array.isArray(images)) {
+        updatedImages = images;
+      }
+
+      // If there are new files, upload them and add to updatedImages
+      if (req.files && req.files.length > 0) {
+        const uploadPromises = req.files.map((file) => {
+          return new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream((error, result) => {
+              if (result) resolve({ url: result.secure_url });
+              else reject(error);
+            });
+            streamifier.createReadStream(file.buffer).pipe(stream);
+          });
+        });
+        const newImages = await Promise.all(uploadPromises);
+        updatedImages = [...updatedImages, ...newImages];
+      }
+
       //Update product fields
       product.name = name || product.name;
       product.description = description || product.description;
@@ -101,12 +147,12 @@ router.put("/:id", protect, admin, async (req, res) => {
       product.countInStock = countInStock || product.countInStock;
       product.category = category || product.category;
       product.brand = brand || product.brand;
-      product.sizes = sizes || product.sizes;
-      product.colors = colors || product.colors;
+      product.sizes = Array.isArray(sizes) ? sizes : sizes?.split(",") || product.sizes;
+      product.colors = Array.isArray(colors) ? colors : colors?.split(",") || product.colors;
       product.collections = collections || product.collections;
       product.material = material || product.material;
       product.gender = gender || product.gender;
-      product.images = images || product.images;
+      product.images = updatedImages;
       product.isFeatured =
         isFeatured !== undefined ? isFeatured : product.isFeatured;
       product.isPublished =
@@ -189,7 +235,7 @@ router.get("/", async (req, res) => {
     }
 
     if (size) {
-      query.sizes = { $in: material.size(",") };
+      query.sizes = { $in: size.split(",") };
     }
 
     if (color) {

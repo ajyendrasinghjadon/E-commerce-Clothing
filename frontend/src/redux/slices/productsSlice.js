@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Async Thunk to fetch products by Collecction and optional filters
+// Async Thunk to fetch products by Collection and optional filters
 export const fetchProductsByFilters = createAsyncThunk(
   "products/fetchByFilters",
   async ({
@@ -129,9 +129,7 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProductsByFilters.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = Array.isArray(action.payload.products)
-          ? action.payload.products
-          : [];
+        state.products = Array.isArray(action.payload) ? action.payload : [];
       })
       .addCase(fetchProductsByFilters.rejected, (state, action) => {
         state.loading = false;

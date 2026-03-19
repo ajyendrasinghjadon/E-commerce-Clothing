@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { fetchAllOrders, updateOrderStatus } from "../../redux/slices/adminOrderSlice";
 
 const OrderManagement = () => {
@@ -19,14 +20,27 @@ const OrderManagement = () => {
     }, [dispatch, user, navigate])
 
     const handleStatusChange = (orderId, status) => {
-        dispatch(updateOrderStatus({id: orderId, status}));
+        dispatch(updateOrderStatus({ id: orderId, status }));
     }
 
     if (loading) return <p>Loading ...</p>
-    if(error) return <p className="text-red-500">{error}</p>
+    if (error) return <p className="text-red-500">{error}</p>
+
+    // Animation variants
+    const pageVariants = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+        exit: { opacity: 0, y: -20, transition: { duration: 0.4 } }
+    };
 
     return (
-        <div className="max-w-7xl mx-auto p-6">
+        <motion.div
+            className="max-w-7xl mx-auto p-6"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+        >
             <h2 className="text-2xl font-black mb-6">Order Management</h2>
 
             <div className="overflow-x-auto shadow-md sm:rounded-lg">
@@ -40,18 +54,32 @@ const OrderManagement = () => {
                             <th className="py-3 px-4">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <motion.tbody
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: {
+                                opacity: 1,
+                                transition: { staggerChildren: 0.05 }
+                            }
+                        }}
+                    >
                         {orders.length > 0 ? (
 
                             orders.map((order) => (
-                                <tr
+                                <motion.tr
                                     key={order._id}
                                     className="border-b border-gray-300 hover:bg-gray-50 cursor-pointer"
+                                    variants={{
+                                        hidden: { opacity: 0, y: 20 },
+                                        visible: { opacity: 1, y: 0 }
+                                    }}
                                 >
                                     <td className="py-4 px-4 font-medium text-gray-900 whitespace-nowrap">
                                         #{order._id}
                                     </td>
-                                    <td className="p-4">{order.user.name}</td>
+                                    <td className="p-4">{order.user?.name || "N/A"}</td>
                                     <td className="p-4">${order.totalPrice.toFixed(2)}</td>
                                     <td className="p-4">
                                         <select
@@ -73,17 +101,17 @@ const OrderManagement = () => {
                                             Mark as Delivered
                                         </button>
                                     </td>
-                                </tr>
+                                </motion.tr>
                             ))
                         ) : (
                             <tr>
                                 <td colSpan={5} className="p-4 text-center text-gray-500">No Orders found.</td>
                             </tr>
                         )}
-                    </tbody>
+                    </motion.tbody>
                 </table>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

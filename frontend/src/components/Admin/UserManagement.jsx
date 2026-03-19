@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { addUser, deleteUser, fetchUsers, updateUser } from "../../redux/slices/adminSlice";
 
 const UserManagement = () => {
@@ -58,8 +59,21 @@ const UserManagement = () => {
         }
     }
 
+    // Animation variants
+    const pageVariants = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+        exit: { opacity: 0, y: -20, transition: { duration: 0.4 } }
+    };
+
     return (
-        <div className="max-w-7xl mx-auto p-6">
+        <motion.div
+            className="max-w-7xl mx-auto p-6"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+        >
             <h2 className="text-xl font-bold mb-4">User Management</h2>
             {loading && <p>Loading ...</p>}
             {error && <p className="text-red-500">Error: {error}</p>}
@@ -128,9 +142,26 @@ const UserManagement = () => {
                             <th className="py-3 px-4">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <motion.tbody
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: {
+                                opacity: 1,
+                                transition: { staggerChildren: 0.05 }
+                            }
+                        }}
+                    >
                         {users.map((user) => (
-                            <tr key={user._id} className="border-b border-gray-300 hover:bg-gray-50">
+                            <motion.tr
+                                key={user._id}
+                                className="border-b border-gray-300 hover:bg-gray-50"
+                                variants={{
+                                    hidden: { opacity: 0, y: 20 },
+                                    visible: { opacity: 1, y: 0 }
+                                }}
+                            >
                                 <td className="p-4 font-medium text-gray-900 whitespace-nowrap">
                                     {user.name}
                                 </td>
@@ -147,12 +178,12 @@ const UserManagement = () => {
                                 <td className="p-4">
                                     <button onClick={() => handleDeleteUser(user._id)} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 hover:cursor-pointer">Delete</button>
                                 </td>
-                            </tr>
+                            </motion.tr>
                         ))}
-                    </tbody>
+                    </motion.tbody>
                 </table>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

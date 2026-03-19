@@ -1,18 +1,10 @@
 require("dotenv").config();
 const express = require("express");
 const multer = require("multer");
-const cloudinary = require("cloudinary").v2;
+const cloudinary = require("../config/cloudinary");
 const streamifier = require("streamifier");
 
-
 const router = express.Router();
-
-//cloudinary configuration
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 //Multer setup using memory storage
 const storage = multer.memoryStorage();
@@ -44,7 +36,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     const result = await streamUpload(req.file.buffer);
 
     // Respond with the uploaded image URL
-    res.json({ imageUrl: result.secure_url})
+    res.json({ imageUrl: result.secure_url })
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });

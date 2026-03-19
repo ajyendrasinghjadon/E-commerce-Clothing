@@ -1,6 +1,6 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
@@ -12,12 +12,12 @@ const subscribeRoutes = require("./routes/subscribeRoute");
 const adminRoutes = require("./routes/adminRoutes");
 const productAdminRoutes = require("./routes/productAdminRoutes");
 const adminOrderRoutes = require("./routes/adminOrderRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 const app = express();
 app.use(express.json());
 app.use(cors()); //allows react to talk to the server without cross origin issues
 
-dotenv.config();
 
 const PORT = 9000;
 // console.log(process.env.PORT);
@@ -29,12 +29,13 @@ app.get("/", (req, res) => {
 });
 
 //API Routes
-app.use("/api/users", userRoutes); 
+app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/checkout", checkoutRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/contact", contactRoutes);
 app.use("/api/", subscribeRoutes);
 
 //Admin

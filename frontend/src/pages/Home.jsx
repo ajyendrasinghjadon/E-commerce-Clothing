@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Hero from "../components/Layout/Hero"
 import FeaturedCollection from "../components/Products/FeaturedCollection";
 import FeaturesSection from "../components/Products/FeaturesSection";
@@ -10,17 +11,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductsByFilters } from "../redux/slices/productsSlice";
 import axios from "axios";
 
-const Home = () => { 
+const Home = () => {
   const dispatch = useDispatch();
   const { products, loading, error } = useSelector((state) => state.products)
   const [bestSellerProduct, setBestSellerProduct] = useState(null)
+
 
   useEffect(() => {
     //Fetch products for a specific collection
     dispatch(
       fetchProductsByFilters({
         gender: "Women",
-        category: "Bottom Wear",
+        category: "Top Wear",
         limit: 8,
       })
     )
@@ -36,8 +38,20 @@ const Home = () => {
     }
     fetchBestSeller()
   }, [dispatch])
+  // Animation variants
+  const pageVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.4 } }
+  };
+
   return (
-    <div>
+    <motion.div
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={pageVariants}
+    >
       <Hero />
       <GenderCollectionSection />
       <NewArrival />
@@ -57,7 +71,7 @@ const Home = () => {
       </div>
       <FeaturedCollection />
       <FeaturesSection />
-    </div>
+    </motion.div>
   );
 };
 

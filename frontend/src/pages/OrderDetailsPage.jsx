@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom"
 import { fetchOrderDetails } from "../redux/slices/orderSlice";
 
 const OrderDetailsPage = () => {
     const { id } = useParams();
-    const dispatch =useDispatch();
-    const {orderDetails, loading, error} = useSelector((state) => state.orders);
+    const dispatch = useDispatch();
+    const { orderDetails, loading, error } = useSelector((state) => state.orders);
 
     useEffect(() => {
         dispatch(fetchOrderDetails(id))
@@ -16,8 +17,21 @@ const OrderDetailsPage = () => {
     if (error) return <p className="text-red-500">Error: {error}</p>
 
 
+    // Animation variants
+    const pageVariants = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+        exit: { opacity: 0, y: -20, transition: { duration: 0.4 } }
+    };
+
     return (
-        <div className="max-w-7xl mx-auto p-4 sm:p-6">
+        <motion.div
+            className="max-w-7xl mx-auto p-4 sm:p-6"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+        >
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Order Details</h2>
             {!orderDetails ?
                 (<p>No Order details found</p>)
@@ -66,7 +80,9 @@ const OrderDetailsPage = () => {
                                 <p>Shipping Method: {orderDetails.shippingMethod}</p>
                                 <p>
                                     Address:{" "}
-                                    {`${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.country}`}
+                                    {orderDetails.shippingAddress
+                                        ? `${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.country}`
+                                        : "N/A"}
                                 </p>
                             </div>
                         </div>
@@ -83,35 +99,35 @@ const OrderDetailsPage = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {orderDetails.orderItems.map((item) => (
-                                    <tr key={item.productId} className="border-b border-gray-200">
-                                        <td className="py-2 px-4 flex items-center">
-                                            <img
-                                                src={item.image}
-                                                alt={item.name}
-                                                className="w-12 h-12 object-cover rounded-lg mr-4"
-                                            />
-                                            <Link
-                                                to={`/product/${item.productId}`}
-                                                className="text-blue-500 hover:underline"
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        </td>
-                                        <td className="py-2 px-4">${item.price}</td>
-                                        <td className="py-2 px-4">{item.quantity}</td>
-                                        <td className="py-2 px-4">${item.price * item.quantity}</td>
-                                    </tr>
-                                ))}
+                                    {(orderDetails.orderItems || []).map((item) => (
+                                        <tr key={item.productId} className="border-b border-gray-200">
+                                            <td className="py-2 px-4 flex items-center">
+                                                <img
+                                                    src={item.image}
+                                                    alt={item.name}
+                                                    className="w-12 h-12 object-cover rounded-lg mr-4"
+                                                />
+                                                <Link
+                                                    to={`/product/${item.productId}`}
+                                                    className="text-blue-500 hover:underline"
+                                                >
+                                                    {item.name}
+                                                </Link>
+                                            </td>
+                                            <td className="py-2 px-4">${item.price}</td>
+                                            <td className="py-2 px-4">{item.quantity}</td>
+                                            <td className="py-2 px-4">${item.price * item.quantity}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
                         {/* Back to Orders Link */}
                         <Link to="/my-orders" className="text-blue-500 hover:underline">
-                        Back to My Orders</Link>
+                            Back to My Orders</Link>
                     </div>
                 )}
-        </div>
+        </motion.div>
     );
 }
 

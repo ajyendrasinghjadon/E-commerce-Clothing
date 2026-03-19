@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { FaFilter } from "react-icons/fa";
+import { motion } from "framer-motion";
 import FilterSidebar from "../components/Products/FilterSidebar";
 import SortOptions from "../components/Products/SortOptions";
 import ProductGrid from "../components/Products/ProductGrid";
@@ -44,8 +45,21 @@ const CollectionPage = () => {
         };
     }, [isSidebarOpen]);
 
+    // Animation variants
+    const pageVariants = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+        exit: { opacity: 0, y: -20, transition: { duration: 0.4 } }
+    };
+
     return (
-        <div className="flex flex-col lg:flex-row">
+        <motion.div
+            className="flex flex-col lg:flex-row"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+        >
             {/* Mobile Filter Button */}
             <button
                 onClick={toggleSidebar}
@@ -80,7 +94,7 @@ const CollectionPage = () => {
                 </div>
             </div>
 
-        </div>
+        </motion.div>
     );
 };
 

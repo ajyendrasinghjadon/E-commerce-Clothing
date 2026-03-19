@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 import ProductGrid from "./ProductGrid";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -79,7 +80,12 @@ const ProductDetails = ({ productId }) => {
     }
 
     return (
-        <div className="p-6">
+        <motion.div
+            className="p-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+        >
             {selectedProduct && (
                 <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg">
                     <div className="flex flex-col md:flex-row">
@@ -131,7 +137,7 @@ const ProductDetails = ({ productId }) => {
                             <p className="text-xl text-gray-500 mb-2">
                                 ${selectedProduct.price}
                             </p>
-                            
+
                             <p className="text-gray-600 mb-4">
                                 {selectedProduct.description}
                             </p>
@@ -205,15 +211,21 @@ const ProductDetails = ({ productId }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-20">
+                    <motion.div
+                        className="mt-20"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        transition={{ duration: 0.5 }}
+                    >
                         <h2 className="text-2xl text-center font-medium mb-4">
                             You May Also Like
                         </h2>
                         <ProductGrid products={similarProducts} loading={loading} error={error} />
-                    </div>
+                    </motion.div>
                 </div>
             )}
-        </div>
+        </motion.div>
     );
 };
 

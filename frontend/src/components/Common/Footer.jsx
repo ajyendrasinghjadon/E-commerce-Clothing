@@ -1,10 +1,11 @@
 import { IoLogoInstagram } from "react-icons/io"
 import { RiTwitterXLine } from "react-icons/ri"
-import { TbBrandMeta } from "react-icons/tb"
+import { TbBrandFiverr, TbBrandMeta } from "react-icons/tb"
 import { Link } from "react-router-dom"
-import {FiPhoneCall} from "react-icons/fi"
+import { FiPhoneCall } from "react-icons/fi"
+import { FaLinkedin } from "react-icons/fa"
 const Footer = () => {
-  return ( <footer className="border-t border-gray-200 py-12 mx-12"> 
+  return (<footer className="border-t border-gray-200 py-12 mx-12">
     <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 lg:px-0">
       <div>
         <h3 className="text-lg text-gray-800 mb-4">News Letter</h3>
@@ -25,16 +26,16 @@ const Footer = () => {
         <h3 className="text-lg text-gray-800 mb-4">Shop</h3>
         <ul className="space-y-2 text-gray-600">
           <li>
-            <Link to="#" className="hover:text-gray-500 transition-colors">Men's Top Wear</Link>
+            <Link to="/collections/all?category=Top+Wear&gender=Men" className="hover:text-gray-500 transition-colors">Men's Top Wear</Link>
           </li>
           <li>
-            <Link to="#" className="hover:text-gray-500 transition-colors">Women's Top Wear</Link>
+            <Link to="/collections/all?category=Top+Wear&gender=Women" className="hover:text-gray-500 transition-colors">Women's Top Wear</Link>
           </li>
           <li>
-            <Link to="#" className="hover:text-gray-500 transition-colors">Men's Bottom Wear</Link>
+            <Link to="/collections/all?category=Bottom+Wear&gender=Men" className="hover:text-gray-500 transition-colors">Men's Bottom Wear</Link>
           </li>
           <li>
-            <Link to="#" className="hover:text-gray-500 transition-colors">Women's Bottom Wear</Link>
+            <Link to="/collections/all?category=Bottom+Wear&gender=Women" className="hover:text-gray-500 transition-colors">Women's Bottom Wear</Link>
           </li>
         </ul>
       </div>
@@ -43,16 +44,16 @@ const Footer = () => {
         <h3 className="text-lg text-gray-800 mb-4">Support</h3>
         <ul className="space-y-2 text-gray-600">
           <li>
-            <Link to="#" className="hover:text-gray-500 transition-colors">Contact Us</Link>
+            <Link to="/contact" className="hover:text-gray-400 transition-colors">Contact Us</Link>
           </li>
           <li>
-            <Link to="#" className="hover:text-gray-500 transition-colors">About Us</Link>
+            <Link to="/about" className="hover:text-gray-400 transition-colors">About Us</Link>
           </li>
           <li>
-            <Link to="#" className="hover:text-gray-500 transition-colors">FAQs</Link>
+            <Link to="/faqs" className="hover:text-gray-400 transition-colors">FAQs</Link>
           </li>
           <li>
-            <Link to="#" className="hover:text-gray-500 transition-colors">Features</Link>
+            <Link to="/features" className="hover:text-gray-400 transition-colors">Features</Link>
           </li>
         </ul>
       </div>
@@ -60,45 +61,47 @@ const Footer = () => {
       <div>
         <h3 className="text-lg text-gray-800 mb-4">Follow Us</h3>
         <div className="flex items-center space-x-4 mb-6">
-          <a 
-          href="https://www.facebook.com" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="hover:text-gray-500"
+          <a
+            href="https://www.fiverr.com/s/Eg7Q8B0"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-400"
           >
-            <TbBrandMeta className="h-5 w-5"/>
+            <TbBrandFiverr className="h-5 w-5" />
           </a>
-          <a 
-          href="https://www.facebook.com" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="hover:text-gray-500"
+          <a
+            href="https://www.instagram.com/_ajyendra?igsh=ZTFvczZuMjZhNHkw"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-400"
           >
-            <IoLogoInstagram className="h-5 w-5"/>
+            <IoLogoInstagram className="h-5 w-5" />
           </a>
-          <a 
-          href="https://www.facebook.com" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="hover:text-gray-500"
+          <a
+            href="https://www.linkedin.com/in/ajyendra-singh-jadon-10789138a?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+            target="_blank"
+            rel="noopener noreferrer"
+            className=" hover:text-gray-400"
           >
-            <RiTwitterXLine className="h-4 w-4"/>
+            <FaLinkedin className="h-4 w-4" />
           </a>
         </div>
-        <p className="text-gray-500 ">Call Us</p>
+        <p className="text-gray-800 ">Call Us</p>
         <p>
-          <FiPhoneCall className="inline-block mr-2"/>
-          0123-456-789
+          <a href="tel: +919897278469" className="hover:text-gray-400">
+            <FiPhoneCall className="inline-block mr-2" />
+            +91 98972 - 78469
+          </a>
         </p>
       </div>
     </div>
     {/* Footer */}
     <div className="container mx-auto mt-12 px-4 lg:px-0 border-t border-gray-200 pt-6">
-      <p className="text-gray-500 text-sm tracking-tighter text-center">
-        &copy; 2025, CompileTab. All Rights Reserved.
+      <p className="text-gray-400 text-sm tracking-tighter text-center">
+        &copy; 2026, E-commerce. All Rights Reserved.
       </p>
     </div>
-  </footer> 
+  </footer>
   )
 }
 

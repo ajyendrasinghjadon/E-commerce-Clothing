@@ -19,8 +19,16 @@ import EditProductPage from './components/Admin/EditProductPage';
 import OrderManagement from './components/Admin/OrderManagement';
 
 import { Provider } from "react-redux";
-import store from "./redux/store"
+import store from "./redux/store";
 import ProtectedRoute from './components/Common/ProtectedRoute';
+
+import Contact from './pages/Contact';
+import About from './pages/About';
+import Faqs from './pages/Faqs';
+import Features from './pages/Features';
+import VerifyOtp from './pages/VerifyOtp';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const App = () => {
   return (
@@ -38,7 +46,14 @@ const App = () => {
             <Route path="checkout" element={<CheckOut />} />
             <Route path="order-confirmation" element={<OrderConfirmationPage />} />
             <Route path="order/:id" element={<OrderDetailsPage />} />
-            <Route path="/my-orders" element={<MyOrdersPage />} />
+            <Route path="my-orders" element={<MyOrdersPage />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="about" element={<About />} />
+            <Route path="faqs" element={<Faqs />} />
+            <Route path="features" element={<Features />} />
+            <Route path="verify-otp" element={<VerifyOtp />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
+            <Route path="reset-password" element={<ResetPassword />} />
           </Route>
           <Route
             path="/admin"
@@ -49,6 +64,7 @@ const App = () => {
             <Route index element={<AdminHomePage />} />
             <Route path="users" element={<UserManagement />} />
             <Route path="products" element={<ProductManagement />} />
+            <Route path="products/new" element={<EditProductPage />} />
             <Route path="products/:id/edit" element={<EditProductPage />} />
             <Route path="orders" element={<OrderManagement />} />
           </Route>

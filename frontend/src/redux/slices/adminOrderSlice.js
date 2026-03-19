@@ -4,7 +4,7 @@ import axios from "axios";
 // Fetch all orders (admin only)
 export const fetchAllOrders = createAsyncThunk(
   "adminOrders/fetchAllOrders",
-  async (__DO_NOT_USE__ActionTypes, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/admin/orders`,
@@ -91,8 +91,8 @@ const adminOrderSlice = createSlice({
         state.totalSales = totalSales;
       })
       .addCase(fetchAllOrders.rejected, (state, action) => {
-        state.loading = false; 
-        state.error = action.payload.message;
+        state.loading = false;
+        state.error = action.payload?.message || action.error.message;
       })
       // Update Order Status
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
