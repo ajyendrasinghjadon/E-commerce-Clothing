@@ -16,7 +16,10 @@ const contactRoutes = require("./routes/contactRoutes");
 
 const app = express();
 app.use(express.json());
-app.use(cors()); //allows react to talk to the server without cross origin issues
+app.use(cors({
+  origin: "http://localhost:3000", // temporary for local frontend
+  credentials: true
+}));
 
 
 const PORT = 9000;
