@@ -189,11 +189,11 @@ const UserManagement = () => {
                         <div key={user._id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
                             <div className="flex justify-between items-start mb-2">
                                 <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight">Name</span>
-                                <span className="text-[14px] font-medium text-gray-900">{user.name}</span>
+                                <span className="text-[14px] font-medium text-gray-900 break-all ml-4 text-right">{user.name}</span>
                             </div>
-                            <div className="flex justify-between items-center mb-2">
-                                <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight">Email</span>
-                                <span className="text-[14px] text-gray-600">{user.email}</span>
+                            <div className="flex flex-col mb-2">
+                                <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight mb-1">Email</span>
+                                <span className="text-[14px] text-gray-600 break-all">{user.email}</span>
                             </div>
                             <div className="flex justify-between items-center mb-4">
                                 <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight">Role</span>
