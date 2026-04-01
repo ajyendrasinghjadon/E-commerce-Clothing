@@ -33,27 +33,27 @@ const CartContent = ({ cart, userId, guestId }) => {
                     <div className="flex items-center">
                         <img src={product.image} alt={product.name} className="w-20 h-24 object-cover mr-4 rounded" />
                         <div >
-                            <h3>{product.name}</h3>
-                            <p className="text-sm text-gray-500">
+                            <h3 className="text-[14px] font-medium text-gray-900">{product.name}</h3>
+                            <p className="text-[13px] text-gray-500">
                                 size: {product.size} | color: {product.color}
                             </p>
                             <div className="flex items-center mt-2">
                                 <button 
                                 onClick={() => handleAddToCart(product.productId, -1, product.quantity, product.size, product.color)}
-                                className="border rounded px-2 py-1 text-xl font-medium hover:cursor-pointer">
+                                className="border rounded px-2 py-1 text-[13px] font-medium hover:cursor-pointer">
                                     -
                                 </button>
-                                <span className="mx-4">{product.quantity}</span>
+                                <span className="mx-4 text-[13px]">{product.quantity}</span>
                                 <button 
                                 onClick={() => handleAddToCart(product.productId, 1, product.quantity, product.size, product.color)}
-                                className="border rounded px-2 py-1 text-xl font-medium hover:cursor-pointer">
+                                className="border rounded px-2 py-1 text-[13px] font-medium hover:cursor-pointer">
                                     +
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <p>$ {product.price.toLocaleString()}</p>
+                        <p className="text-[14px] font-medium text-gray-900">$ {product.price.toLocaleString()}</p>
                         <button onClick={() => handleRemoveFromCart(product.productId, product.size, product.color)}>
                             <RiDeleteBin3Line className="h-6 w-6 mt-2 text-red-600 hover:cursor-pointer" />
                         </button>

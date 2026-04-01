@@ -1,1 +1,0 @@
-in contact us page after send message. Message should be sent as it was done in dentalclinic landing page.

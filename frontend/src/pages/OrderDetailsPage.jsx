@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom"
 import { fetchOrderDetails } from "../redux/slices/orderSlice";
+import { OrderDetailsSkeleton } from "../components/Common/Skeleton";
 
 const OrderDetailsPage = () => {
     const { id } = useParams();
@@ -13,8 +14,8 @@ const OrderDetailsPage = () => {
         dispatch(fetchOrderDetails(id))
     }, [dispatch, id]);
 
-    if (loading) return <p>Loading...</p>
-    if (error) return <p className="text-red-500">Error: {error}</p>
+    if (loading) return <OrderDetailsSkeleton />
+    if (error) return <div className="text-center py-20 text-red-500">Error: {error}</div>
 
 
     // Animation variants
@@ -32,7 +33,7 @@ const OrderDetailsPage = () => {
             exit="exit"
             variants={pageVariants}
         >
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Order Details</h2>
+            <h2 className="text-[28px] font-medium mb-6">Order Details</h2>
             {!orderDetails ?
                 (<p>No Order details found</p>)
                 :
@@ -41,19 +42,19 @@ const OrderDetailsPage = () => {
                         {/* Order Info */}
                         <div className="flex flex-col sm:flex-row justify-between mb-8">
                             <div>
-                                <h3 className="text-lg md:text-xl font-semibold">
+                                <h3 className="text-[18px] font-medium text-gray-900">
                                     Order ID: #{orderDetails._id}
                                 </h3>
-                                <p className="text-gray-600">
+                                <p className="text-[14px] text-gray-600">
                                     {new Date(orderDetails.createdAt).toLocaleDateString()}
                                 </p>
                             </div>
                             <div className="flex flex-col items-start sm:items-end mt-4 sm:mt-0">
-                                <span
+                                 <span
                                     className={`${orderDetails.isPaid
                                         ? "bg-green-100 text-green-700"
                                         : "bg-red-100 text-red-700"
-                                        } px-3 py-1 rounded-full text-sm font-medium mb-2`}
+                                        } px-3 py-1 rounded-full text-[12px] font-medium mb-2`}
                                 >
                                     {orderDetails.isPaid ? "Approved" : "Pending"}
                                 </span>
@@ -61,7 +62,7 @@ const OrderDetailsPage = () => {
                                     className={`${orderDetails.isDelivered
                                         ? "bg-green-100 text-green-700"
                                         : "bg-yellow-100 text-yellow-700"
-                                        } px-3 py-1 rounded-full text-sm font-medium mb-2`}
+                                        } px-3 py-1 rounded-full text-[12px] font-medium mb-2`}
                                 >
                                     {orderDetails.isDelivered ? "Delivered" : "Pending Delivery"}
                                 </span>
@@ -70,13 +71,13 @@ const OrderDetailsPage = () => {
                         {/* Customer, Payment, Shipping Info */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
                             <div>
-                                <h4 className="text-lg font-semibold mb-2">Payment Info</h4>
+                                <h4 className="text-[16px] font-medium mb-2 text-gray-900">Payment Info</h4>
                                 <p>Payment Method: {orderDetails.paymentMethod}</p>
                                 <p>Status: {orderDetails.isPaid ? "Paid" : "Unpaid"}</p>
                             </div>
 
                             <div>
-                                <h4 className="text-lg font-semibold mb-2">Shipping Info</h4>
+                                <h4 className="text-[16px] font-medium mb-2 text-gray-900">Shipping Info</h4>
                                 <p>Shipping Method: {orderDetails.shippingMethod}</p>
                                 <p>
                                     Address:{" "}
@@ -88,14 +89,14 @@ const OrderDetailsPage = () => {
                         </div>
                         {/* Product list */}
                         <div className="overflow-x-auto">
-                            <h4 className="text-lg font-semibold mb-4 text-gray-900 border-b pb-2">Products Ordered</h4>
+                            <h4 className="text-[16px] font-medium mb-4 text-gray-900 border-b pb-2">Products Ordered</h4>
                             <table className="min-w-full text-gray-600 mb-4 table-auto sm:table-fixed">
-                                <thead className="bg-gray-50">
+                                <thead className="bg-gray-50 text-[12px] uppercase text-gray-900 tracking-tight">
                                     <tr>
-                                        <th className="py-3 px-4 text-left font-medium text-gray-900 uppercase tracking-wider w-1/2">Product</th>
-                                        <th className="py-3 px-4 text-left font-medium text-gray-900 uppercase tracking-wider">Unit Price</th>
-                                        <th className="py-3 px-4 text-left font-medium text-gray-900 uppercase tracking-wider">Qty</th>
-                                        <th className="py-3 px-4 text-left font-medium text-gray-900 uppercase tracking-wider">Total</th>
+                                        <th className="py-3 px-4 text-left font-medium">Product</th>
+                                        <th className="py-3 px-4 text-left font-medium">Unit Price</th>
+                                        <th className="py-3 px-4 text-left font-medium">Qty</th>
+                                        <th className="py-3 px-4 text-left font-medium">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -114,9 +115,9 @@ const OrderDetailsPage = () => {
                                                     {item.name}
                                                 </Link>
                                             </td>
-                                            <td className="py-4 px-4 font-medium text-gray-900">${item.price.toFixed(2)}</td>
-                                            <td className="py-4 px-4 text-gray-600">{item.quantity}</td>
-                                            <td className="py-4 px-4 font-bold text-gray-900">${(item.price * item.quantity).toFixed(2)}</td>
+                                            <td className="py-4 px-4 font-medium text-gray-900 text-[14px]">${item.price.toFixed(2)}</td>
+                                            <td className="py-4 px-4 text-gray-600 text-[14px]">{item.quantity}</td>
+                                            <td className="py-4 px-4 font-medium text-gray-900 text-[14px]">${(item.price * item.quantity).toFixed(2)}</td>
                                         </tr>
                                     ))}
                                 </tbody>

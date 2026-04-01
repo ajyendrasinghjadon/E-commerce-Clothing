@@ -17,42 +17,42 @@ const AdminSidebar = () => {
   return (
     <div className="p-6">
         <div className="mb-6">
-            <Link to="/admin" className="text-2xl font-medium">
+            <Link to="/admin" className="text-[24px] font-medium tracking-tight">
                 Rabbit
             </Link>
         </div>
-        <h2 className="text-xl font-medium mb-6 text-center">Admin Dashboard</h2>
+        <h2 className="text-[18px] font-medium mb-6 text-center">Admin Dashboard</h2>
         <nav className="flex flex-col space-y-2">
             <NavLink 
             to="/admin/users" 
-            className={({isActive}) => isActive ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2" : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"}>
+            className={({isActive}) => isActive ? "bg-gray-700 text-white py-3 px-4 rounded-md flex items-center space-x-2 text-[13px] font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded-md flex items-center space-x-2 text-[13px] font-medium"}>
             <FaUser />
             <span>Users</span>
             </NavLink>
 
             <NavLink 
             to="/admin/products" 
-            className={({isActive}) => isActive ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2" : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"}>
+            className={({isActive}) => isActive ? "bg-gray-700 text-white py-3 px-4 rounded-md flex items-center space-x-2 text-[13px] font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded-md flex items-center space-x-2 text-[13px] font-medium"}>
             <FaBoxOpen />
             <span>Products</span>
             </NavLink>
 
             <NavLink 
             to="/admin/orders" 
-            className={({isActive}) => isActive ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2" : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"}>
+            className={({isActive}) => isActive ? "bg-gray-700 text-white py-3 px-4 rounded-md flex items-center space-x-2 text-[13px] font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded-md flex items-center space-x-2 text-[13px] font-medium"}>
             <FaClipboardList />
             <span>Orders</span>
             </NavLink>
 
             <NavLink 
             to="/" 
-            className={({isActive}) => isActive ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2" : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded flex items-center space-x-2"}>
+            className={({isActive}) => isActive ? "bg-gray-700 text-white py-3 px-4 rounded-md flex items-center space-x-2 text-[13px] font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4 rounded-md flex items-center space-x-2 text-[13px] font-medium"}>
             <FaStore />
             <span>Shop</span>
             </NavLink>
         </nav>
         <div className="mt-6">
-            <button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded flex items-center justify-center space-x-2 hover:cursor-pointer">
+            <button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md flex items-center justify-center space-x-2 hover:cursor-pointer text-[13px] font-medium">
                 <FaSignOutAlt />
                 <span>Logout</span>
             </button>

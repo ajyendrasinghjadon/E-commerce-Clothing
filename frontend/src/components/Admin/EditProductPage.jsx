@@ -47,6 +47,7 @@ const EditProductPage = () => {
     images: [],
   });
 
+  const [colorsInput, setColorsInput] = useState("");
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
@@ -68,6 +69,9 @@ const EditProductPage = () => {
           }))
           : [],
       });
+      if (selectedProduct.colors) {
+        setColorsInput(selectedProduct.colors.join(", "));
+      }
     }
   }, [id, selectedProduct]);
 
@@ -87,6 +91,7 @@ const EditProductPage = () => {
       gender: "",
       images: [],
     });
+    setColorsInput("");
   };
 
   const handleChange = (e) => {
@@ -113,7 +118,12 @@ const EditProductPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!productData.sizes.length || !productData.colors.length) {
+    const colorsArray = colorsInput
+      .split(",")
+      .map((color) => color.trim())
+      .filter((color) => color !== "");
+
+    if (!productData.sizes.length || colorsArray.length === 0) {
       alert("Please select at least one size and color.");
       return;
     }
@@ -127,7 +137,7 @@ const EditProductPage = () => {
     formData.append("category", productData.category);
     formData.append("brand", productData.brand);
     formData.append("sizes", productData.sizes.join(","));
-    formData.append("colors", productData.colors.join(","));
+    formData.append("colors", colorsArray.join(","));
     formData.append("collections", productData.collections);
     formData.append("material", productData.material);
     formData.append("gender",
@@ -184,65 +194,69 @@ const EditProductPage = () => {
 
       <form onSubmit={handleSubmit}>
         <div className="mb-6">
-          <label className="block font-semibold mb-2">Product Name</label>
+          <label className="block text-[13px] font-medium text-gray-900 mb-2">Product Name</label>
           <input
             type="text"
             name="name"
             value={productData.name}
             onChange={handleChange}
-            className="w-full border rounded-md p-2"
+            className="w-full border border-gray-300 rounded-md p-3 text-[14px] focus:ring-1 focus:ring-gray-900 outline-none"
             required
           />
         </div>
 
         <div className="mb-6">
-          <label className="block font-semibold mb-2">Description</label>
+          <label className="block text-[13px] font-medium text-gray-900 mb-2">Description</label>
           <textarea
             name="description"
             value={productData.description}
             onChange={handleChange}
-            className="w-full border rounded-md p-2"
+            className="w-full border border-gray-300 rounded-md p-3 text-[14px] focus:ring-1 focus:ring-gray-900 outline-none h-32"
             required
           />
         </div>
 
-        <div className="mb-6">
-          <label className="block font-semibold mb-2">Price</label>
-          <input
-            type="number"
-            name="price"
-            value={productData.price}
-            onChange={handleChange}
-            className="w-full border rounded-md p-2"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label className="block text-[13px] font-medium text-gray-900 mb-2">Price</label>
+            <input
+              type="number"
+              name="price"
+              value={productData.price}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-md p-3 text-[14px] focus:ring-1 focus:ring-gray-900 outline-none"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-[13px] font-medium text-gray-900 mb-2">Count in Stock</label>
+            <input
+              type="number"
+              name="countInStock"
+              value={productData.countInStock}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-md p-3 text-[14px] focus:ring-1 focus:ring-gray-900 outline-none"
+              required
+            />
+          </div>
         </div>
 
         <div className="mb-6">
-          <label className="block font-semibold mb-2">Count in Stock</label>
-          <input
-            type="number"
-            name="countInStock"
-            value={productData.countInStock}
-            onChange={handleChange}
-            className="w-full border rounded-md p-2"
-          />
-        </div>
-
-        <div className="mb-6">
-          <label className="block font-semibold mb-2">SKU</label>
+          <label className="block text-[13px] font-medium text-gray-900 mb-2">SKU</label>
           <input
             type="text"
             name="sku"
             value={productData.sku}
             onChange={handleChange}
-            className="w-full border rounded-md p-2"
+            className="w-full border border-gray-300 rounded-md p-3 text-[14px] focus:ring-1 focus:ring-gray-900 outline-none"
             required
           />
         </div>
 
         {/* Sizes */}
         <div className="mb-6">
-          <label className="block font-semibold mb-2">Sizes</label>
+          <label className="block text-[13px] font-medium text-gray-900 mb-2">Sizes</label>
 
           <div className="flex gap-3 flex-wrap">
             {sizeOptions.map((size) => (
@@ -256,10 +270,10 @@ const EditProductPage = () => {
 
                   setProductData({ ...productData, sizes: updatedSizes });
                 }}
-                className={`px-4 py-2 border rounded-md transition 
+                className={`px-5 py-3 border rounded-md transition text-[13px] font-medium
         ${productData.sizes.includes(size)
-                    ? "bg-black text-white"
-                    : "bg-white hover:bg-gray-100"
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
                   }`}
               >
                 {size}
@@ -270,82 +284,84 @@ const EditProductPage = () => {
 
         {/* Colors */}
         <div className="mb-6">
-          <label className="block font-semibold mb-2">Colors</label>
+          <label className="block text-[13px] font-medium text-gray-900 mb-2">Colors (CSV)</label>
+          <input
+            type="text"
+            placeholder="e.g. Red, Blue, Black"
+            value={colorsInput}
+            onChange={(e) => setColorsInput(e.target.value)}
+            className="w-full border border-gray-300 rounded-md p-3 text-[14px] focus:ring-1 focus:ring-gray-900 outline-none"
+          />
+          <p className="text-[12px] text-gray-500 mt-1">
+            Enter colors separated by commas
+          </p>
 
-          <div className="flex gap-3 flex-wrap">
-            {["Black", "White", "Red", "Blue", "Green", "Gray"].map((color) => (
-              <button
-                type="button"
-                key={color}
-                onClick={() => {
-                  const updatedColors = productData.colors.includes(color)
-                    ? productData.colors.filter((c) => c !== color)
-                    : [...productData.colors, color];
-
-                  setProductData({ ...productData, colors: updatedColors });
-                }}
-                className={`px-4 py-2 border rounded-md transition 
-        ${productData.colors.includes(color)
-                    ? "bg-black text-white"
-                    : "bg-white hover:bg-gray-100"
-                  }`}
-              >
-                {color}
-              </button>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {colorsInput.split(",").map((color, i) => (
+              color.trim() && (
+                <span key={i} className="px-3 py-1 bg-gray-100 text-[12px] rounded border border-gray-200 text-gray-600">
+                  {color.trim()}
+                </span>
+              )
             ))}
           </div>
         </div>
 
-        {/* CATEGORY AUTOCOMPLETE */}
-        <div className="mb-6">
-          <label className="block font-semibold mb-2">Category</label>
-          <input
-            list="category-options"
-            name="category"
-            value={productData.category}
-            onChange={handleChange}
-            className="w-full border rounded-md p-2"
-            required
-          />
-          <datalist id="category-options">
-            {categories.map((cat) => (
-              <option key={cat} value={cat} />
-            ))}
-          </datalist>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          {/* CATEGORY AUTOCOMPLETE */}
+          <div>
+            <label className="block text-[13px] font-medium text-gray-900 mb-2">Category</label>
+            <input
+              list="category-options"
+              name="category"
+              value={productData.category}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-md p-3 text-[14px] focus:ring-1 focus:ring-gray-900 outline-none"
+              required
+            />
+            <datalist id="category-options">
+              {categories.map((cat) => (
+                <option key={cat} value={cat} />
+              ))}
+            </datalist>
+          </div>
+
+          {/* COLLECTION AUTOCOMPLETE */}
+          <div>
+            <label className="block text-[13px] font-medium text-gray-900 mb-2">Collection</label>
+            <input
+              list="collection-options"
+              name="collections"
+              value={productData.collections}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-md p-3 text-[14px] focus:ring-1 focus:ring-gray-900 outline-none"
+              required
+            />
+            <datalist id="collection-options">
+              {collectionsList.map((col) => (
+                <option key={col} value={col} />
+              ))}
+            </datalist>
+          </div>
         </div>
 
-        {/* COLLECTION AUTOCOMPLETE */}
-        <div className="mb-6">
-          <label className="block font-semibold mb-2">Collection</label>
-          <input
-            list="collection-options"
-            name="collections"
-            value={productData.collections}
-            onChange={handleChange}
-            className="w-full border rounded-md p-2"
-            required
-          />
-          <datalist id="collection-options">
-            {collectionsList.map((col) => (
-              <option key={col} value={col} />
+        <div className="mb-8">
+          <label className="block text-[13px] font-medium text-gray-900 mb-3">Gender</label>
+          <div className="flex gap-4 p-1 bg-gray-100 rounded-lg w-fit">
+            {["men", "women", "unisex"].map((g) => (
+              <button
+                key={g}
+                type="button"
+                onClick={() => setProductData({ ...productData, gender: g })}
+                className={`px-6 py-2.5 rounded-md text-[13px] font-medium transition-all duration-200 capitalize
+                  ${productData.gender === g 
+                    ? "bg-[#ea2e0e] text-white shadow-sm" 
+                    : "text-gray-500 hover:text-gray-700"}`}
+              >
+                {g}
+              </button>
             ))}
-          </datalist>
-        </div>
-
-        <div className="mb-6">
-          <label className="block font-semibold mb-2">Gender</label>
-          <select
-            name="gender"
-            value={productData.gender}
-            onChange={handleChange}
-            className="w-full border rounded-md p-2"
-            required
-          >
-            <option value="">Select Gender</option>
-            <option value="men">Men</option>
-            <option value="women">Women</option>
-            <option value="unisex">Unisex</option>
-          </select>
+          </div>
         </div>
 
         <div className="mb-6">
@@ -383,7 +399,7 @@ const EditProductPage = () => {
 
         <button
           type="submit"
-          className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition"
+          className="w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 transition font-medium text-[14px]"
         >
           {id ? "Update Product" : "Create Product"}
         </button>

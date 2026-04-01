@@ -26,6 +26,18 @@ const CollectionPage = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+    // Scroll lock when sidebar is open
+    useEffect(() => {
+        if (isSidebarOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
+        }
+        return () => {
+            document.body.style.overflow = "unset";
+        };
+    }, [isSidebarOpen]);
+
     // Handle clicks outside sidebar
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -70,7 +82,7 @@ const CollectionPage = () => {
 
             {/* Overlay */}
             <div
-                className={`fixed inset-0 bg-black/40 lg:hidden transition-opacity duration-300
+                className={`fixed inset-0 bg-black/60 backdrop-blur-md z-[60] lg:hidden transition-opacity duration-300
     ${isSidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
                 onClick={() => setIsSidebarOpen(false)}
             />
@@ -78,7 +90,7 @@ const CollectionPage = () => {
             {/* Filter Sidebar */}
             <div
                 ref={sidebarRef}
-                className={`fixed inset-y-0 left-0 z-20 w-64 bg-white overflow-y-auto transform transition-transform duration-300
+                className={`fixed inset-y-0 left-0 z-[70] w-64 bg-white overflow-y-auto transform transition-transform duration-300
     ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:static lg:translate-x-0`}
             >
                 <FilterSidebar />

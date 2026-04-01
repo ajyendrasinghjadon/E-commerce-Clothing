@@ -79,7 +79,7 @@ const NewArrival = () => {
     <section className="py-16 px-4 lg:px-0 mx-4 md:mx-12">
       <div className="container mx-auto text-center mb-10 relative">
         <motion.h2
-          className="text-3xl font-bold mb-4"
+          className="text-[18px] font-medium mb-3"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.8 }}
@@ -88,7 +88,7 @@ const NewArrival = () => {
           Explore New Arrivals
         </motion.h2>
         <motion.p
-          className="text-lg text-gray-600 mb-8"
+          className="text-[14px] text-gray-600 mb-6 leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.8 }}
@@ -139,8 +139,8 @@ const NewArrival = () => {
             />
             <div className="absolute bottom-0 left-0 right-0 backdrop-blur-md text-white p-2 sm:p-4 rounded-b-lg">
               <Link to={`/product/${product._id}`} className="block">
-                <h4 className="font-medium text-sm sm:text-base">{product.name}</h4>
-                <p className="mt-1 text-xs sm:text-sm">${product.price}</p>
+                <h4 className="font-medium text-[14px]">{product.name}</h4>
+                <p className="mt-1 text-[13px] text-white/80">${product.price}</p>
               </Link>
             </div>
           </motion.div>

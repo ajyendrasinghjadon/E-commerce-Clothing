@@ -69,10 +69,10 @@ const OrderConfirmationPage = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                 </div>
-                <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
+                <h1 className="text-[28px] font-medium text-gray-900 mb-2">
                     Order Placed Successfully!
                 </h1>
-                <p className="text-lg text-gray-600">
+                <p className="text-[14px] text-gray-600">
                     Thank you for your purchase. We've received your order and are processing it.
                 </p>
             </div>
@@ -82,14 +82,14 @@ const OrderConfirmationPage = () => {
                 <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 mb-4 gap-4">
                         <div>
-                            <p className="text-sm text-gray-500 uppercase tracking-wide font-medium">Order ID</p>
-                            <h2 className="text-lg font-bold text-gray-900 break-all">
+                            <p className="text-[12px] text-gray-500 uppercase tracking-tight font-medium">Order ID</p>
+                            <h2 className="text-[16px] font-medium text-gray-900 break-all">
                                 #{checkout._id}
                             </h2>
                         </div>
                         <div className="sm:text-right">
-                             <p className="text-sm text-gray-500 uppercase tracking-wide font-medium">Order Date</p>
-                            <p className="text-gray-900 font-semibold">
+                             <p className="text-[12px] text-gray-500 uppercase tracking-tight font-medium">Order Date</p>
+                            <p className="text-gray-900 text-[14px] font-medium">
                                 {new Date(checkout.createdAt).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}
                             </p>
                         </div>
@@ -97,21 +97,21 @@ const OrderConfirmationPage = () => {
 
                     <div className="bg-emerald-50 p-4 rounded-xl flex items-center justify-between">
                          <div>
-                            <p className="text-emerald-800 text-sm font-semibold">Estimated Delivery</p>
-                            <p className="text-emerald-700 text-sm uppercase tracking-wide">
+                            <p className="text-emerald-800 text-[13px] font-medium">Estimated Delivery</p>
+                            <p className="text-emerald-700 text-[12px] uppercase tracking-tight">
                                 {calculateEstimatedDelivery(checkout.createdAt)}
                             </p>
                         </div>
                         <div className="text-right">
-                            <p className="text-emerald-800 text-sm font-semibold">Order Total</p>
-                            <p className="text-xl font-bold text-emerald-900">${checkout.totalPrice}</p>
+                            <p className="text-emerald-800 text-[13px] font-medium">Order Total</p>
+                            <p className="text-[18px] font-medium text-emerald-900">${checkout.totalPrice}</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Ordered Items Card */}
                 <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                    <h3 className="text-lg font-bold text-gray-900 mb-6">Items Ordered</h3>
+                    <h3 className="text-[16px] font-medium text-gray-900 mb-6">Items Ordered</h3>
                     <div className="space-y-4">
                         {checkout.checkoutItems.map((item) => (
                             <div
@@ -130,17 +130,17 @@ const OrderConfirmationPage = () => {
                                 </div>
 
                                 <div className="flex-1 min-w-0">
-                                    <h4 className="text-md font-bold text-gray-900 truncate">{item.name}</h4>
-                                    <p className="text-sm text-gray-500 font-medium">
+                                    <h4 className="text-[14px] font-medium text-gray-900 truncate">{item.name}</h4>
+                                    <p className="text-[13px] text-gray-500">
                                         Variant: <span className="text-gray-900">{item.color} / {item.size}</span>
                                     </p>
                                 </div>
 
                                 <div className="text-right">
-                                    <p className="text-md font-bold text-gray-900">
+                                    <p className="text-[14px] font-medium text-gray-900">
                                         ${(item.price * item.quantity).toFixed(2)}
                                     </p>
-                                    <p className="text-xs text-gray-500">
+                                    <p className="text-[12px] text-gray-500">
                                         ${item.price} each
                                     </p>
                                 </div>
@@ -153,7 +153,7 @@ const OrderConfirmationPage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {/* Payment */}
                     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                        <h4 className="text-sm text-gray-500 uppercase tracking-wide font-bold mb-3">
+                        <h4 className="text-[13px] text-gray-500 uppercase tracking-tight font-medium mb-3">
                             Payment Details
                         </h4>
                         <div className="flex items-center gap-3">
@@ -171,7 +171,7 @@ const OrderConfirmationPage = () => {
 
                     {/* Delivery */}
                     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                        <h4 className="text-sm text-gray-500 uppercase tracking-wide font-bold mb-3">
+                        <h4 className="text-[13px] text-gray-500 uppercase tracking-tight font-medium mb-3">
                             Delivery Address
                         </h4>
                         <div className="flex items-start gap-3">
@@ -179,8 +179,8 @@ const OrderConfirmationPage = () => {
                                 <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                             </div>
                             <div className="text-gray-900">
-                                <p className="font-bold">{checkout.shippingAddress?.address}</p>
-                                <p className="text-sm text-gray-600">
+                                <p className="font-medium text-[14px]">{checkout.shippingAddress?.address}</p>
+                                <p className="text-[13px] text-gray-600">
                                     {checkout.shippingAddress?.city}, {checkout.shippingAddress?.country}
                                 </p>
                             </div>
@@ -191,13 +191,13 @@ const OrderConfirmationPage = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
                     <button
                         onClick={() => navigate("/my-orders")}
-                        className="px-8 py-4 bg-black text-white rounded-xl font-bold hover:bg-gray-800 transition-all shadow-lg text-center"
+                        className="px-8 py-4 bg-black text-white rounded-md text-[13px] font-medium hover:bg-gray-800 transition-all shadow-md text-center"
                     >
                         View My Orders
                     </button>
                     <button
                         onClick={() => navigate("/")}
-                        className="px-8 py-4 bg-white text-gray-900 border border-gray-200 rounded-xl font-bold hover:bg-gray-50 transition-all text-center"
+                        className="px-8 py-4 bg-white text-gray-900 border border-gray-200 rounded-md text-[13px] font-medium hover:bg-gray-50 transition-all text-center"
                     >
                         Continue Shopping
                     </button>

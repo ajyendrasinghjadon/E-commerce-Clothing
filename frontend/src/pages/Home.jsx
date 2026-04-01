@@ -10,6 +10,7 @@ import ProductGrid from "../components/Products/ProductGrid";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductsByFilters } from "../redux/slices/productsSlice";
 import axios from "axios";
+import { ProductDetailsSkeleton } from "../components/Common/Skeleton";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -57,14 +58,14 @@ const Home = () => {
       <NewArrival />
 
       {/* Best Seller */}
-      <h2 className="text-3xl text-center font-bold mb-4">Best Seller</h2>
+      <h2 className="text-[18px] text-center font-medium mb-4 uppercase tracking-tight">Best Seller</h2>
 
       {bestSellerProduct ? (<ProductDetails productId={bestSellerProduct._id} />) : (
-        <p className="text-center">Loading best seller product...</p>
+        <ProductDetailsSkeleton />
       )}
 
       <div className="container mx-auto">
-        <h2 className="text-3xl text-center font-bold mb-4">
+        <h2 className="text-[18px] text-center font-medium mb-4">
           Top Wears For Women
         </h2>
         <ProductGrid products={products} loading={loading} error={error} />

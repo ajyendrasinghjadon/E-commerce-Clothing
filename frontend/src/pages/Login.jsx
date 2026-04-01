@@ -67,41 +67,41 @@ const Login = () => {
                     className="w-full max-w-md bg-white p-8 rounded-lg border border-gray-300 shadow-sm"
                 >
                     <div className="flex justify-center mb-6">
-                        <h2 className="text-xl font-medium">Rabbit</h2>
+                        <h2 className="text-[24px] font-medium tracking-tight">Rabbit</h2>
                     </div>
 
-                    <h2 className="text-2xl font-bold text-center mb-6">
+                    <h2 className="text-[18px] font-medium text-center mb-4">
                         Hey there! 👋
                     </h2>
 
-                    <p className="text-center mb-6">
+                    <p className="text-center text-[14px] text-gray-600 mb-6">
                         Enter your username and password to Login.
                     </p>
 
                     <div className="mb-4">
-                        <div className="block text-sm font-semibold mb-2">Email</div>
+                        <div className="block text-[13px] font-medium text-gray-900 mb-2">Email</div>
                         <input
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className="w-full p-2 border border-gray-300 rounded text-[13px] focus:outline-none focus:ring-1 focus:ring-black"
                             placeholder="Enter your email address"
                         />
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-sm font-semibold mb-2">
+                        <label className="block text-[13px] font-medium text-gray-900 mb-2">
                             Password
                         </label>
                         <input
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className="w-full p-2 border border-gray-300 rounded text-[13px] focus:outline-none focus:ring-1 focus:ring-black"
                             placeholder="Enter your password"
                         />
                         <div className="flex justify-end mt-2">
-                            <Link to="/forgot-password" size="sm" className="text-sm text-blue-500 hover:text-blue-600 transition">Forgot Password?</Link>
+                            <Link to="/forgot-password" size="sm" className="text-[13px] text-blue-500 hover:text-blue-600 transition">Forgot Password?</Link>
                         </div>
                     </div>
 
@@ -114,12 +114,12 @@ const Login = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-black text-white p-2 rounded-lg font-semibold hover:bg-gray-800 transition hover:cursor-pointer"
+                        className="w-full bg-black text-white p-2 rounded-lg text-[13px] font-medium hover:bg-gray-800 transition hover:cursor-pointer"
                     >
                         {loading ? "Loading..." : "Sign In"}
                     </button>
 
-                    <p className="mt-6 text-center text-sm">
+                    <p className="mt-6 text-center text-[13px]">
                         Don't have an account?{" "}
                         <Link
                             to={`/register?redirect=${encodeURIComponent(redirect)}`}

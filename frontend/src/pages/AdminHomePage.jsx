@@ -91,7 +91,7 @@ const AdminHomePage = () => {
             <div className="mt-6">
                 <h2 className="text-2xl font-bold mb-4">Recent Orders</h2>
                 <div className="overflow-x-auto">
-                    <table className="min-w-full text-left text-gray-500">
+                    <table className="min-w-full text-left text-gray-500 hidden md:table">
                         <thead className="bg-gray-100 text-xs uppercase text-gray-700">
                             <tr>
                                 <th className="py-3 px-4">Order ID</th>
@@ -104,9 +104,9 @@ const AdminHomePage = () => {
                             {orders.length > 0 ? (
                                 orders.map((order) => (
                                     <tr key={order._id} className="border-b border-gray-200 hover:bg-gray-50 cursor-pointer" >
-                                        <td className="p-4">{order._id}</td>
+                                        <td className="p-4">#{order._id}</td>
                                         <td className="p-4">{order.user?.name || "Deleted User"}</td>
-                                        <td className="p-4">{order.totalPrice.toFixed(2)}</td>
+                                        <td className="p-4">${order.totalPrice.toFixed(2)}</td>
                                         <td className="p-4">{order.status}</td>
                                     </tr>
                                 ))
@@ -119,6 +119,36 @@ const AdminHomePage = () => {
                             )}
                         </tbody>
                     </table>
+
+                    {/* Mobile View: Cards */}
+                    <div className="md:hidden flex flex-col gap-4">
+                         {orders.length > 0 ? (
+                                orders.map((order) => (
+                                    <div key={order._id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                                        <div className="flex justify-between items-start mb-2">
+                                            <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight">Order ID</span>
+                                            <span className="text-[14px] font-medium text-gray-900 break-all ml-2">#{order._id}</span>
+                                        </div>
+                                        <div className="flex justify-between items-center mb-2">
+                                            <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight">User</span>
+                                            <span className="text-[14px] text-gray-600">{order.user?.name || "Deleted User"}</span>
+                                        </div>
+                                        <div className="flex justify-between items-center mb-2">
+                                            <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight">Total Price</span>
+                                            <span className="text-[14px] text-gray-600">${order.totalPrice.toFixed(2)}</span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight">Status</span>
+                                            <span className="text-[13px] font-medium text-gray-900">{order.status}</span>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="p-4 text-center text-gray-500 bg-white rounded-lg border border-gray-200">
+                                    No recent orders found.
+                                </div>
+                            )}
+                    </div>
                 </div>
             </div>
         </motion.div>

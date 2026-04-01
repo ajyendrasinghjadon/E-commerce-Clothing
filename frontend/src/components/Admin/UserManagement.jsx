@@ -74,72 +74,72 @@ const UserManagement = () => {
             exit="exit"
             variants={pageVariants}
         >
-            <h2 className="text-xl font-bold mb-4">User Management</h2>
+            <h2 className="text-[28px] font-medium mb-6">User Management</h2>
             {loading && <p>Loading ...</p>}
             {error && <p className="text-red-500">Error: {error}</p>}
             {/* Add new user form */}
-            <div className="p-6 rounded-lg mb-4">
-                <h3 className="text-lg font-bold mb-4">Add New User</h3>
+            <div className="p-6 rounded-lg mb-4 border border-gray-200">
+                <h3 className="text-[18px] font-medium mb-4">Add New User</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-gray-700">Name</label>
+                        <label className="block text-[13px] font-medium text-gray-900 mb-1">Name</label>
                         <input
                             type="text"
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className="w-full p-2 border border-gray-300 rounded-md"
                             required
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700">Email</label>
+                        <label className="block text-[13px] font-medium text-gray-900 mb-1">Email</label>
                         <input
                             type="email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className="w-full p-2 border border-gray-300 rounded-md"
                             required
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700">Password</label>
+                        <label className="block text-[13px] font-medium text-gray-900 mb-1">Password</label>
                         <input
                             type="password"
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className="w-full p-2 border border-gray-300 rounded-md"
                             required
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700">Role</label>
+                        <label className="block text-[13px] font-medium text-gray-900 mb-1">Role</label>
                         <select
                             name="role"
                             value={formData.role}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className="w-full p-2 border border-gray-300 rounded-md"
                         >
                             <option value="customer">Customer</option>
                             <option value="admin">Admin</option>
                         </select>
                     </div>
-                    <button type="submit" className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+                    <button type="submit" className="bg-green-500 text-white py-2 px-4 rounded-md text-[13px] font-medium hover:bg-green-600 transition-colors">
                         Add User
                     </button>
                 </form>
             </div>
             {/* User List Management */}
             <div className="overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="min-w-full text-left text-gray-500">
-                    <thead className="bg-gray-100 text-xs uppercase text-gray-700">
+                <table className="min-w-full text-left text-gray-600 hidden md:table">
+                    <thead className="bg-gray-100 text-[12px] uppercase text-gray-900 tracking-tight">
                         <tr>
-                            <th className="py-3 px-4">Name</th>
-                            <th className="py-3 px-4">Email</th>
-                            <th className="py-3 px-4">Role</th>
-                            <th className="py-3 px-4">Actions</th>
+                            <th className="py-3 px-4 font-medium">Name</th>
+                            <th className="py-3 px-4 font-medium">Email</th>
+                            <th className="py-3 px-4 font-medium">Role</th>
+                            <th className="py-3 px-4 font-medium">Actions</th>
                         </tr>
                     </thead>
                     <motion.tbody
@@ -162,26 +162,60 @@ const UserManagement = () => {
                                     visible: { opacity: 1, y: 0 }
                                 }}
                             >
-                                <td className="p-4 font-medium text-gray-900 whitespace-nowrap">
+                                 <td className="p-4 font-medium text-gray-900 whitespace-nowrap text-[14px]">
                                     {user.name}
                                 </td>
-                                <td className="p-4">{user.email}</td>
+                                <td className="p-4 text-[14px] text-gray-600">{user.email}</td>
                                 <td className="p-4">
                                     <select
                                         value={user.role}
                                         onChange={(e) => handleRoleChange(user._id, e.target.value)}
-                                        className="p-2 border border-gray-300 rounded">
+                                        className="p-2 border border-gray-300 rounded-md text-[13px]">
                                         <option value="customer">Customer</option>
                                         <option value="admin">Admin</option>
                                     </select>
                                 </td>
                                 <td className="p-4">
-                                    <button onClick={() => handleDeleteUser(user._id)} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 hover:cursor-pointer">Delete</button>
+                                    <button onClick={() => handleDeleteUser(user._id)} className="bg-red-500 text-white px-4 py-2 rounded-md text-[13px] font-medium hover:bg-red-600 hover:cursor-pointer">Delete</button>
                                 </td>
                             </motion.tr>
                         ))}
                     </motion.tbody>
                 </table>
+
+                {/* Mobile View: Cards */}
+                <div className="md:hidden flex flex-col gap-4 p-4">
+                    {users.map((user) => (
+                        <div key={user._id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                            <div className="flex justify-between items-start mb-2">
+                                <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight">Name</span>
+                                <span className="text-[14px] font-medium text-gray-900">{user.name}</span>
+                            </div>
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight">Email</span>
+                                <span className="text-[14px] text-gray-600">{user.email}</span>
+                            </div>
+                            <div className="flex justify-between items-center mb-4">
+                                <span className="text-[12px] font-medium text-gray-500 uppercase tracking-tight">Role</span>
+                                <select
+                                    value={user.role}
+                                    onChange={(e) => handleRoleChange(user._id, e.target.value)}
+                                    className="p-2 border border-gray-300 rounded-md text-[13px]">
+                                    <option value="customer">Customer</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <div className="flex justify-end gap-2 pt-2 border-t border-gray-100">
+                                <button 
+                                    onClick={() => handleDeleteUser(user._id)} 
+                                    className="w-full bg-red-500 text-white py-3 rounded-md text-[13px] font-medium hover:bg-red-600 transition-colors"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </motion.div>
     )

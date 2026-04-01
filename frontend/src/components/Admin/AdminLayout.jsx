@@ -15,7 +15,7 @@ const AdminLayout = () => {
                 <button onClick={toggleSidebar}>
                     <FaBars size={24} className="hover:cursor-pointer"/>
                 </button>
-                <h1 className="ml-4 text-xl font-medium">Admin Dashboard</h1>
+                <h1 className="ml-4 text-[18px] font-medium">Admin Dashboard</h1>
             </div>
             {/* Overlay for mobile sidebar */}
             {isSidebarOpen && (

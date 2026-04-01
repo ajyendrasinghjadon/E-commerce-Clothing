@@ -1,59 +1,89 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FiTruck, FiShield, FiRefreshCw, FiAward, FiHeart, FiGlobe } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
-const Features = () => {
-    const featuresList = [
+const FAQItem = ({ question, answer, isOpen, toggleOpen }) => {
+    return (
+        <div className="border-b border-gray-300 overflow-hidden">
+            <button
+                className="w-full py-5 flex justify-between items-center text-left focus:outline-none px-1 group"
+                onClick={toggleOpen}
+            >
+                <span className="text-[14px] font-medium text-gray-900 group-hover:text-[#ea2e0e] transition-colors">
+                    {question}
+                </span>
+
+                <span className="ml-4 shrink-0 text-[#ea2e0e]">
+                    {isOpen ? (
+                        <FiChevronUp className="text-[18px]" />
+                    ) : (
+                        <FiChevronDown className="text-[18px]" />
+                    )}
+                </span>
+            </button>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                    >
+                        <div className="pb-5 px-1 text-[13px] text-gray-600 leading-relaxed">
+                            {answer}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+};
+
+const Faqs = () => {
+    const [openIndex, setOpenIndex] = useState(0);
+
+    const faqs = [
         {
-            icon: <FiTruck className="text-4xl mb-4 text-[#ea2e0e]" />,
-            title: "Free Global Shipping",
-            description: "Enjoy free standard shipping on all orders over $100. We deliver to over 50 countries worldwide with reliable tracking."
+            question: "What is your return and exchange policy?",
+            answer:
+                "Return unworn items within 30 days with original tags. You can receive a refund or exchange based on availability."
         },
         {
-            icon: <FiRefreshCw className="text-4xl mb-4 text-[#ea2e0e]" />,
-            title: "Easy 30-Day Returns",
-            description: "Not completely satisfied? Return your unworn items within 30 days for a full refund or exchange. No questions asked."
+            question: "How long does shipping take?",
+            answer:
+                "Standard delivery takes 3–5 business days. Express options (1–2 days) are available at checkout."
         },
         {
-            icon: <FiShield className="text-4xl mb-4 text-[#ea2e0e]" />,
-            title: "Secure Checkout",
-            description: "Your data is safe with us. Our checkout process is fully encrypted and we accept all major secure payment methods."
+            question: "How can I track my order?",
+            answer:
+                "You’ll receive a tracking link via email once your order ships. You can also check it in your account."
         },
         {
-            icon: <FiAward className="text-4xl mb-4 text-[#ea2e0e]" />,
-            title: "Premium Quality",
-            description: "We source only the finest sustainable materials. Our garments are designed to last, outliving seasonal trends."
+            question: "Do you ship internationally?",
+            answer:
+                "Yes, we ship to 50+ countries. Delivery times and rates are calculated at checkout."
         },
         {
-            icon: <FiHeart className="text-4xl mb-4 text-[#ea2e0e]" />,
-            title: "Ethical Manufacturing",
-            description: "We partner exclusively with factories that ensure fair wages, safe conditions, and sustainable practices."
+            question: "How do your clothes fit?",
+            answer:
+                "Our products fit true to size. Refer to the size chart on each product page for accuracy."
         },
         {
-            icon: <FiGlobe className="text-4xl mb-4 text-[#ea2e0e]" />,
-            title: "Sustainable Packaging",
-            description: "Our commitment to the planet extends to our packaging, which is 100% recyclable, compostable, or biodegradable."
+            question: "What payment methods do you accept?",
+            answer:
+                "We accept major cards, PayPal, Apple Pay, and Google Pay."
         }
     ];
 
     const pageVariants = {
         initial: { opacity: 0, y: 20 },
-        animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-        exit: { opacity: 0, y: -20, transition: { duration: 0.4 } }
+        animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+        exit: { opacity: 0, y: -20 }
     };
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 30 },
+    const sectionVariants = {
+        hidden: { opacity: 0, y: 25 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
     };
 
@@ -65,64 +95,69 @@ const Features = () => {
             exit="exit"
             variants={pageVariants}
         >
-            <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
-                <motion.div
-                    className="text-center mb-16"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
-                    variants={{
-                        hidden: { opacity: 0, y: 30 },
-                        visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-                    }}
-                >
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[#ea2e0e]">Why Choose Us</h1>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto hover:text-gray-300 transition-colors">
-                        We're committed to providing the best shopping experience, from premium quality products to exceptional customer service.
-                    </p>
-                </motion.div>
+            <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
 
+                {/* HEADER */}
                 <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.1 }}
-                >
-                    {featuresList.map((feature, index) => (
-                        <motion.div
-                            key={index}
-                            className="bg-white p-8 rounded-2xl border border-gray-300 shadow-md hover:shadow-lg hover:border-[#ea2e0e] transition-all group"
-                            variants={itemVariants}
-                        >
-                            <div className="transform group-hover:scale-110 transition-transform duration-300 origin-left">
-                                {feature.icon}
-                            </div>
-                            <h3 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-gray-300 transition-colors">{feature.title}</h3>
-                            <p className="text-gray-600 leading-relaxed group-hover:text-gray-300 transition-colors">
-                                {feature.description}
-                            </p>
-                        </motion.div>
-                    ))}
-                </motion.div>
-
-                <motion.div
-                    className="mt-20 text-center"
+                    className="text-center mb-14"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    variants={itemVariants}
+                    variants={sectionVariants}
                 >
+                    <h1 className="text-[28px] font-medium mb-3 text-[#ea2e0e]">
+                        Frequently Asked Questions
+                    </h1>
+                    <p className="text-[14px] text-gray-600 max-w-md mx-auto leading-relaxed">
+                        Find quick answers about orders, shipping, returns, and more.
+                    </p>
+                </motion.div>
+
+                {/* FAQ BOX */}
+                <motion.div
+                    className="bg-white rounded-xl p-6 border border-gray-300"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={sectionVariants}
+                >
+                    <div className="divide-y divide-gray-300">
+                        {faqs.map((faq, index) => (
+                            <FAQItem
+                                key={index}
+                                question={faq.question}
+                                answer={faq.answer}
+                                isOpen={openIndex === index}
+                                toggleOpen={() =>
+                                    setOpenIndex(openIndex === index ? -1 : index)
+                                }
+                            />
+                        ))}
+                    </div>
+                </motion.div>
+
+                {/* CTA */}
+                <motion.div
+                    className="mt-16 text-center"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={sectionVariants}
+                >
+                    <p className="text-[13px] text-gray-600 mb-3">
+                        Still need help?
+                    </p>
                     <a
-                        href="/collections/all"
-                        className="inline-block bg-[#ea2e0e] text-white font-bold py-4 px-10 rounded-full hover:bg-red-700 hover:text-gray-300 transition-colors shadow-lg text-lg"
+                        href="/contact"
+                        className="inline-block bg-[#ea2e0e] text-white text-[13px] px-8 py-3 rounded-md hover:bg-red-700 transition"
                     >
-                        Shop Now
+                        Contact Support
                     </a>
                 </motion.div>
+
             </div>
         </motion.div>
     );
 };
 
-export default Features;
+export default Faqs;

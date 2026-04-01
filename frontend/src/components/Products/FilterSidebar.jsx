@@ -87,7 +87,7 @@ const FilterSidebar = () => {
     return (
         <div className="p-6 bg-gray-50 h-full overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold tracking-wide">Filters</h3>
+                <h3 className="text-[16px] font-medium tracking-tight">Filters</h3>
                 <button
                     onClick={() => {
                         setFilters({
@@ -113,7 +113,7 @@ const FilterSidebar = () => {
 
             {/* CATEGORY */}
             <div className="mb-8 border-b pb-6">
-                <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-gray-700">
+                <h4 className="text-[13px] font-medium uppercase tracking-tight mb-4 text-gray-700">
                     Category
                 </h4>
                 <div className="space-y-3">
@@ -127,7 +127,7 @@ const FilterSidebar = () => {
                                 checked={filters.category === category}
                                 className="w-4 h-4 accent-black"
                             />
-                            <span className="text-sm text-gray-600 group-hover:text-black transition">
+                            <span className="text-[13px] text-gray-600 group-hover:text-black transition">
                                 {category}
                             </span>
                         </label>
@@ -137,7 +137,7 @@ const FilterSidebar = () => {
 
             {/* GENDER */}
             <div className="mb-8 border-b pb-6">
-                <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-gray-700">
+                <h4 className="text-[13px] font-medium uppercase tracking-tight mb-4 text-gray-700">
                     Gender
                 </h4>
                 <div className="space-y-3">
@@ -151,7 +151,7 @@ const FilterSidebar = () => {
                                 checked={filters.gender === gender}
                                 className="w-4 h-4 accent-black"
                             />
-                            <span className="text-sm text-gray-600 group-hover:text-black transition">
+                            <span className="text-[13px] text-gray-600 group-hover:text-black transition">
                                 {gender}
                             </span>
                         </label>
@@ -161,7 +161,7 @@ const FilterSidebar = () => {
 
             {/* COLOR */}
             <div className="mb-8 border-b pb-6">
-                <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-gray-700">
+                <h4 className="text-[13px] font-medium uppercase tracking-tight mb-4 text-gray-700">
                     Color
                 </h4>
 
@@ -184,7 +184,7 @@ const FilterSidebar = () => {
 
             {/* SIZE */}
             <div className="mb-8 border-b pb-6">
-                <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-gray-700">
+                <h4 className="text-[13px] font-medium uppercase tracking-tight mb-4 text-gray-700">
                     Size
                 </h4>
 
@@ -199,7 +199,7 @@ const FilterSidebar = () => {
                                 checked={filters.size.includes(size)}
                                 className="hidden peer"
                             />
-                            <div className="border border-gray-300 text-sm py-2 text-center rounded-md 
+                            <div className="border border-gray-300 text-[13px] py-2 text-center rounded-md 
                             peer-checked:bg-black peer-checked:text-white 
                             hover:bg-black hover:text-white transition">
                                 {size}
@@ -211,7 +211,7 @@ const FilterSidebar = () => {
 
             {/* PRICE */}
             <div className="mb-8">
-                <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-gray-700">
+                <h4 className="text-[13px] font-medium uppercase tracking-tight mb-4 text-gray-700">
                     Price
                 </h4>
 
@@ -224,9 +224,9 @@ const FilterSidebar = () => {
                     className="w-full accent-black"
                 />
 
-                <div className="flex justify-between text-sm text-gray-600 mt-3">
+                <div className="flex justify-between text-[13px] text-gray-600 mt-3">
                     <span>$0</span>
-                    <span className="font-medium">${priceRange[1]}</span>
+                    <span className="text-[13px] font-medium">${priceRange[1]}</span>
                 </div>
             </div>
         </div>
