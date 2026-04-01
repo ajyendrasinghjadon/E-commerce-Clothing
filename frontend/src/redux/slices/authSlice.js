@@ -60,7 +60,7 @@ export const registerUser = createAsyncThunk(
       return rejectWithValue({
         message:
           error.response?.data?.message ||
-          "Email already registered",
+          "Registration failed. Please try again later.",
       });
     }
   }
@@ -120,13 +120,13 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
-// RESEND RESET OTP
-export const resendResetOtp = createAsyncThunk(
-  "auth/resendResetOtp",
+// RESEND OTP (REGISTRATION)
+export const resendOtp = createAsyncThunk(
+  "auth/resendOtp",
   async (email, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/resend-reset-otp`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/resend-otp`,
         { email }
       );
       return response.data;
@@ -137,6 +137,24 @@ export const resendResetOtp = createAsyncThunk(
     }
   }
 );
+
+// RESEND RESET OTP
+export const resendResetOtp = createAsyncThunk(
+    "auth/resendResetOtp",
+    async (email, { rejectWithValue }) => {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/users/resend-reset-otp`,
+          { email }
+        );
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(
+          error.response?.data || { message: "Failed to resend OTP" }
+        );
+      }
+    }
+  );
 
 // CONTACT SUPPORT
 export const contactSupport = createAsyncThunk(
@@ -255,6 +273,18 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(resendResetOtp.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || "Failed to resend OTP";
+      })
+      // RESEND OTP (REGISTRATION)
+      .addCase(resendOtp.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resendOtp.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(resendOtp.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to resend OTP";
       })
